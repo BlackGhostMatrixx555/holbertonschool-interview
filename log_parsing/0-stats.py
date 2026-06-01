@@ -22,12 +22,12 @@ if __name__ == "__main__":
     valid_codes = {200, 301, 400, 401, 403, 404, 405, 500}
     line_count = 0
     pattern = re.compile(
-        r'^\S+ - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$'
+        r'^\S+ - \[.*?\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$'
     )
 
     try:
         for line in sys.stdin:
-            line = line.strip()
+            line = line.rstrip('\n')
             match = pattern.match(line)
             if match:
                 status = int(match.group(1))
