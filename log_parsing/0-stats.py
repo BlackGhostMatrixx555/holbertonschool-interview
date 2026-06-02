@@ -25,17 +25,17 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             parts = line.split()
-            
+
             if len(parts) >= 2:
-                # Try to extract the status code (second to last element)
                 try:
                     status = int(parts[-2])
                     if status in valid_codes:
-                        status_counts[status] = status_counts.get(status, 0) + 1
+                        status_counts[status] = (
+                            status_counts.get(status, 0) + 1
+                        )
                 except ValueError:
                     pass
-                
-                # Try to extract the file size (last element)
+
                 try:
                     size = int(parts[-1])
                     total_size += size
@@ -45,9 +45,9 @@ if __name__ == "__main__":
             line_count += 1
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
-                
+
         print_stats(total_size, status_counts)
-        
+
     except KeyboardInterrupt:
         print_stats(total_size, status_counts)
         raise
