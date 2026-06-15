@@ -17,31 +17,30 @@ def validUTF8(data):
     number_of_bytes = 0
 
     for num in data:
-        # On ne garde que les 8 bits de poids faible (1 octet)
+        # On ne garde que les 8 bits de poids faible
         byte = num & 0xFF
 
         if number_of_bytes == 0:
-            # Détermination de la taille du caractère UTF-8
+            # Détermination de la taille du caractère
             if (byte >> 7) == 0b0:
-                # Caractère sur 1 octet (0xxxxxxx)
+                # 1 octet (0xxxxxxx)
                 continue
             elif (byte >> 5) == 0b110:
-                # Caractère sur 2 octets (110xxxxx), attend 1 octet de suite
+                # 2 octets (110xxxxx), attend 1 suite
                 number_of_bytes = 1
             elif (byte >> 4) == 0b1110:
-                # Caractère sur 3 octets (1110xxxx), attend 2 octets de suite
+                # 3 octets (1110xxxx), attend 2 suite
                 number_of_bytes = 2
             elif (byte >> 3) == 0b11110:
-                # Caractère sur 4 octets (11110xxx), attend 3 octets de suite
+                # 4 octets (11110xxx), attend 3 suite
                 number_of_bytes = 3
             else:
-                # Séquence de départ invalide (ex: commence par 10xxxxxx ou > 4)
+                # Séquence de départ invalide
                 return False
         else:
-            # Vérification de l'octet de continuation (doit commencer par 10)
+            # Vérification de l'octet de continuation (10xxxxxx)
             if (byte >> 6) != 0b10:
                 return False
             number_of_bytes -= 1
 
-    # Si tous les caractères commencés ont bien reçu leurs octets de suite
     return number_of_bytes == 0
