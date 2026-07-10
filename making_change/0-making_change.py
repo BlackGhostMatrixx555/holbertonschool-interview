@@ -20,5 +20,6 @@ def makeChange(coins, total):
 
     if dp[total] > total:
         return -1
-        
+
     return dp[total]
+    
