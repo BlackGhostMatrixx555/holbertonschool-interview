@@ -7,11 +7,11 @@ Prime Game
 def isWinner(x, nums):
     """
     Determines the winner of a set of prime game rounds.
-    
+
     Args:
         x (int): Number of rounds.
         nums (list): Array of n for each round.
-        
+
     Returns:
         str: Name of the player that won the most rounds.
              If the winner cannot be determined, returns None.
@@ -27,7 +27,7 @@ def isWinner(x, nums):
     # Step 1: Sieve of Eratosthenes to find all primes up to max_n
     is_prime = [True] * (max_n + 1)
     is_prime[0] = is_prime[1] = False
-    
+
     for i in range(2, int(max_n**0.5) + 1):
         if is_prime[i]:
             for j in range(i * i, max_n + 1, i):
